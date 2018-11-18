@@ -1,17 +1,17 @@
 from __future__ import print_function       # use print function of Python3 in Python2
 
-import os
+import os                                   # handle files and directories
 import datetime                             # give time
 import random                               # used as shuffle
 import json                                 # output json file
 import argparse                             # resolve input parameters
-import densenet
-import numpy as np
-import keras.backend as K
+import densenet                             # import dense neural network
+import numpy as np                          # handle arrays
+import keras.backend as K                   # use tensorflow
 
-from keras.optimizers import Adam
+from keras.optimizers import Adam           # use optimizers
 
-import data_loader
+import data_loader                          # self-defined file to load images
 
 def run_MURA(
                 batch_size=8,                   # select a batch of samples to train a time
@@ -34,11 +34,12 @@ def run_MURA(
     path_train = '/home/yu/Documents/tensorflow/MURA/MURA-v1.1/train/XR_ELBOW'      # the absolute path
     path_valid = '/home/yu/Documents/tensorflow/MURA/MURA-v1.1/valid/XR_ELBOW'
     X_train_path,Y_train = data_loader.load_path(root_path = path_train, size = im_size)
-
+    X_valid_path,Y_valid = data_loader.load_path(root_path = path_valid, size = im_size)
+    
     X_valid = data_loader.load_image(X_valid_path, im_size)     # import path for validation
     Y_valid = np.asarray(Y_valid)
     nb_classes = 1                                
-    img_dim = (im_size, im_size, 1)     #tuple
+    img_dim = (im_size, im_size, 1)     #tuple channel last
 
     
     ###################
@@ -91,27 +92,29 @@ def run_MURA(
             K.set_value(model.optimizer.lr, np.float32(learning_rate / 100.))
 
         split_size = batch_size
-        num_splits = len(X_train_path) / split_size     # Calculate how many training images
-        arr_all = np.arange(len(X_train_path)).astype(int)
-        random.shuffle(arr_all)                 
-        arr_splits = np.array_split(arr_all, num_splits)    # Divede the training images to num_splits parts
+        num_splits = len(X_train_path) / split_size     # Calculate how many batches of training images
+        arr_all = np.arange(len(X_train_path)).astype(int)      # Return evenly spaced values within a given interval
+        random.shuffle(arr_all)     # reshuffle, so the order of each training would be different
+                                    # avoid local optimal solution
+                                    # with shuffle open, it would be SGD
+        arr_splits = np.array_split(arr_all, num_splits)    # Divede the training images to num_splits batches
 
         l_train_loss = []
         batch_train_loss = []
         start = datetime.datetime.now()
 
-        for i, batch_idx in enumerate(arr_splits):      # i: how many parts, batch_idx: each part
+        for i, batch_idx in enumerate(arr_splits):      # i: how many batches, batch_idx: each batch
 
-            X_batch_path, Y_batch = [], []
+            X_batch_path, Y_batch = [], []              # X_batch_path is the path of images, Y_batch is the label
 
             for idx in batch_idx:
 
                 X_batch_path.append(X_train_path[idx])
                 Y_batch.append(Y_train[idx])
 
-            X_batch = data_loader.load_image(Path = X_batch_path, size =im_size)
+            X_batch = data_loader.load_image(Path = X_batch_path, size =im_size)      # load data for training
             Y_batch = np.asarray(Y_batch)       # Transform the type of Y_batch as array, that is label
-            train_logloss, train_acc = model.train_on_batch(X_batch, Y_batch)
+            train_logloss, train_acc = model.train_on_batch(X_batch, Y_batch)     # train, return loss and accuracy
 
             l_train_loss.append([train_logloss, train_acc])
             batch_train_loss.append([train_logloss, train_acc])
