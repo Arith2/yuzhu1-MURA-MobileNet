@@ -7,19 +7,16 @@ import keras.backend as K
 def load_path(root_path, size = 512):
 	'''
 	load MURA data
-
-
 	'''
-	#a = 0
+
 	Path = []
 	labels = []
-	for root, dirs, files in os.walk(root_path): #读取所有图片, os.walk返回迭代器genertor 遍历所有文件
+	for root, dirs, files in os.walk(root_path): # read all images
 		for name in files:
 			path_1 = os.path.join(root, name)
 			Path.append(path_1)
-			if root.split('_')[-1]=='positive':	 #positive标签为1，否则为0；
-				labels+=[1]   	          	 #valid 最后一级目录文件patient11880\\study1_negative\\image3.png
-											 #train 最后一级目录文件patient06537\\study1_negnative\\image2.png
+			if root.split('_')[-1]=='positive':	 # positive label 1，otherwise 0；
+				labels+=[1]   	          	 
 			else:
 			    labels+=[0]
 
@@ -43,27 +40,25 @@ def load_image(Path = '/home/yu/Documents/tensorflow/MURA/MURA_densenet_v1/valid
 	Images[:, :, :] = (Images[:, :, :] - mean) / std
 	
 	if K.image_data_format() == "channels_first":
-		Images = np.expand_dims(Images,axis=1)		   #扩展维度1
+		Images = np.expand_dims(Images,axis=1)		   # expand the first dimension 
 	if K.image_data_format() == "channels_last":
-		Images = np.expand_dims(Images,axis=3)             #扩展维度3(usebackend tensorflow:aixs=3; theano:axixs=1) 
+		Images = np.expand_dims(Images,axis=3)             
 	return Images
 
 
 def randome_rotation_flip(image,size = 512):
 	if random.randint(0,1):
-		iamge = cv2.flip(image,1) # 1-->水平翻转 0-->垂直翻转 -1-->水平垂直
+		iamge = cv2.flip(image,1) 
 
 	if random.randint(0,1):
 		angle = random.randint(-30,30)
 		M = cv2.getRotationMatrix2D((size/2,size/2),angle,1)
-		#第三个参数：变换后的图像大小
 		image = cv2.warpAffine(image,M,(size,size))
 	return image
 
 
 
 if __name__ == '__main__':
-#	a,b = load_path()
 	a, b = load_path(root_path ='/home/yu/Documents/tensorflow/MURA/MURA-v1.1/train', size = 320)
 	print(a)
 	print(b)
