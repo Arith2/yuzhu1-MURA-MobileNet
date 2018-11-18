@@ -1,4 +1,4 @@
-from __future__ import print_function
+from __future__ import print_function       # use print function of Python3 in Python2
 
 import os
 import datetime                             # give time
