@@ -1,8 +1,6 @@
 # yuzhu1-MURA-MobileNet
-    Keras, 
-    MURA, 
-    MobileNet, 
-https://github.com/JarvisPeng/MURA_densenet.git, [Project](https://github.com/JarvisPeng/MURA_densenet.git)
+   Keras, MURA, MobileNet,</br>
+   Reference: https://github.com/JarvisPeng/MURA_densenet.git.
 
 ###   1. Topic:
     Fractures detection on X-Ray images using Machine Learning
@@ -49,4 +47,4 @@ https://github.com/JarvisPeng/MURA_densenet.git, [Project](https://github.com/Ja
         ]
     ]
 }
-    ```
+
