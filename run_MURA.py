@@ -25,43 +25,22 @@ def run_MURA(
                 weight_decay=1E-4,              # wight decay
                 plot_architecture=False         # plot network architecture
 ):
-    """ Run MURA experiments
-
-    :param batch_size: int -- batch size
-    :param nb_epoch: int -- number of training epochs
-    :param depth: int -- network depth
-    :param nb_dense_block: int -- number of dense blocks
-    :param nb_filter: int -- initial number of conv filter
-    :param growth_rate: int -- number of new filters added by conv layers
-    :param dropout_rate: float -- dropout rate
-    :param learning_rate: float -- learning rate
-    :param weight_decay: float -- weight decay
-    :param plot_architecture: bool -- whether to plot network architecture
-
+  
     """
 
     ###################
     # Data processing #
     ###################
 
-     # /home/yu/Documents/tensorflow/MURA/MURA-v1.1
-     # the path of MURA dataset
-
-
-
-    im_size = 320   #测试修改参数 size root_path nb_epoch nb_dense_block
-    path_train = '/home/yu/Documents/tensorflow/MURA/MURA-v1.1/train/XR_ELBOW'
+    im_size = 320   # resize images
+    path_train = '/home/yu/Documents/tensorflow/MURA/MURA-v1.1/train/XR_ELBOW'      # the absolute path
     path_valid = '/home/yu/Documents/tensorflow/MURA/MURA-v1.1/valid/XR_ELBOW'
     X_train_path,Y_train = data_loader.load_path(root_path = path_train, size = im_size)
-    X_valid_path,Y_valid = data_loader.load_path(root_path = path_valid, size = im_size)
 
-    # print(X_train_path)
-    # print(X_valid_path)
-
-    X_valid = data_loader.load_image(X_valid_path, im_size)  #提前加载验证集
+    X_valid = data_loader.load_image(X_valid_path, im_size)     # import path for validation
     Y_valid = np.asarray(Y_valid)
     nb_classes = 1                                
-    img_dim = (im_size, im_size, 1)                 #加上最后一个维度,类型为tuple
+    img_dim = (im_size, im_size, 1)     #tuple
 
     
     ###################
