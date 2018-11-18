@@ -17,6 +17,7 @@
     
 ###  4. 11-17-2018: <h3>
    1. Run a current project based on DNN successfully, https://github.com/JarvisPeng/MURA_densenet.git.
+   1. Train_accuracy is 0.59648, valid_accuracy is 0.50753
    1. Next step: use MobileNet to replace DNN to reduce the size of network and the consumption of resources
    1. Log file in json format:
    ```json
