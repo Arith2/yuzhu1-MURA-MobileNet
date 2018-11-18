@@ -25,8 +25,6 @@ def run_MURA(
                 weight_decay=1E-4,              # wight decay
                 plot_architecture=False         # plot network architecture
 ):
-  
-    """
 
     ###################
     # Data processing #
@@ -58,7 +56,6 @@ def run_MURA(
                               weight_decay=weight_decay)
     # Model output
     model.summary()
-    dir(model)      # show all attributes of class 'Model'
 
     # Build optimizer
     opt = Adam(lr=learning_rate, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
@@ -80,11 +77,11 @@ def run_MURA(
     list_train_loss = []
     list_valid_loss = []
     list_learning_rate = []
-    best_record = [100,0,100,100] #记录最优 [验证集损失函数值,准确率，训练集数据集loss差值,acc差值]
+    best_record = [100,0,100,100]     # record the best result
     start_time = datetime.datetime.now()
     for e in range(nb_epoch):
 
-        if e == int(0.25 * nb_epoch):
+        if e == int(0.25 * nb_epoch):     # update learning_rate
             K.set_value(model.optimizer.lr, np.float32(learning_rate / 10.))
 
         if e == int(0.5 * nb_epoch):
@@ -96,7 +93,7 @@ def run_MURA(
         split_size = batch_size
         num_splits = len(X_train_path) / split_size     # Calculate how many training images
         arr_all = np.arange(len(X_train_path)).astype(int)
-        random.shuffle(arr_all)                 #随机打乱index索引顺序
+        random.shuffle(arr_all)                 
         arr_splits = np.array_split(arr_all, num_splits)    # Divede the training images to num_splits parts
 
         l_train_loss = []
@@ -104,7 +101,6 @@ def run_MURA(
         start = datetime.datetime.now()
 
         for i, batch_idx in enumerate(arr_splits):      # i: how many parts, batch_idx: each part
-
 
             X_batch_path, Y_batch = [], []
 
@@ -122,12 +118,12 @@ def run_MURA(
             if i %100 == 0:                     # 100 batches
                 loss_1, acc_1 = np.mean(np.array(l_train_loss), 0)
                 loss_2, acc_2 = np.mean(np.array(batch_train_loss), 0)
-                batch_train_loss = []           #当前100batch的损失函数和准确率
+                batch_train_loss = []           
                 print ('[Epoch {}/{}] [Batch {}/{}] [Time: {}] [all_batchs--> train_epoch_logloss: {:.5f}, train_epoch_acc:{:.5f}] '.format
                     (e+1,nb_epoch,i, len(arr_splits),datetime.datetime.now() - start,loss_1,acc_1),
                     '[this_100_batchs-->train_batchs_logloss: {:.5f}, train_batchs_acc:{:.5f}]'.format(loss_2, acc_2))
 
-        # 运行验证集
+        # validate
         valid_logloss, valid_acc = model.evaluate(X_valid,
                                                 Y_valid,
                                                 verbose=0,
@@ -159,21 +155,20 @@ def run_MURA(
 
         record = [valid_logloss,valid_acc,abs(valid_logloss-list_train_loss[-1][0]),abs(valid_acc-list_train_loss[-1][1]),]
         if ((record[0]<=best_record[0]) &(record[1]>=best_record[1])) :
-            if e <= int(0.25 * nb_epoch)|(record[2]<=best_record[2])&(record[3]<=best_record[3]):#四分之一epoch之后加入差值判定
-                best_record=record                      #记录最小的 [验证集损失函数值,准确率，训练集数据loss差值,acc差值]
+            if e <= int(0.25 * nb_epoch)|(record[2]<=best_record[2])&(record[3]<=best_record[3]):
+                best_record=record                      
                 print('saving the best model:epoch',e+1,best_record)
                 model.save('save_models/best_MURA_modle@epochs{}.h5'.format(e+1))
         model.save('save_models/MURA_modle@epochs{}.h5'.format(e+1))
 
 
 if __name__ == '__main__':
-    # 直接使用默认参数
     parser = argparse.ArgumentParser(description='Run MURA experiment')
     parser.add_argument('--batch_size', default=8, type=int, #default=64
                         help='Batch size')
     parser.add_argument('--nb_epoch',  type=int, default=1,#default=30,
                         help='Number of epochs')
-    parser.add_argument('--depth', type=int, default=6*3+4,#default=7,    #这个参数不再使用，直接从densenet中的列表设置
+    parser.add_argument('--depth', type=int, default=6*3+4,#default=7,    
                         help='Network depth')
     parser.add_argument('--nb_dense_block', type=int, default=4, #default=1,
                         help='Number of dense blocks')
@@ -211,6 +206,4 @@ if __name__ == '__main__':
              args.learning_rate,
              args.weight_decay,
              args.plot_architecture)
-#    print('hello')
-#     run_MURA()
- #   print(123)
+
