@@ -169,7 +169,7 @@ def DenseNet(nb_classes, img_dim, depth, nb_dense_block, growth_rate,
 
     # Initial convolution
     x = Conv2D(nb_filter, (7, 7),
-               strides=(2, 2),  #复现dense169，步长为2 ，kernel大小为7*7
+               strides=(2, 2),  
                kernel_initializer="he_uniform",
                padding="same",
                name="initial_conv2D",
@@ -177,9 +177,9 @@ def DenseNet(nb_classes, img_dim, depth, nb_dense_block, growth_rate,
                kernel_regularizer=l2(weight_decay))(model_input)
 
     # Add dense blocks
-    nb_layers1 = [6,12,32,32,48,32,48,64,32]  #每个denseblock的3*3卷积层数 随便填的 ，
+    nb_layers1 = [6,12,32,32,48,32,48,64,32]  
     for block_idx in range(nb_dense_block - 1):
-        x, nb_filter = denseblock(x, concat_axis, nb_layers1[block_idx],  #原为nb_layers
+        x, nb_filter = denseblock(x, concat_axis, nb_layers1[block_idx],  
                                   nb_filter, growth_rate, 
                                   dropout_rate=dropout_rate,
                                   weight_decay=weight_decay)
@@ -188,7 +188,7 @@ def DenseNet(nb_classes, img_dim, depth, nb_dense_block, growth_rate,
                        weight_decay=weight_decay)
 
     # The last denseblock does not have a transition
-    x, nb_filter = denseblock(x, concat_axis, nb_layers1[nb_dense_block-1],#原为nb_layers
+    x, nb_filter = denseblock(x, concat_axis, nb_layers1[nb_dense_block-1],
                               nb_filter, growth_rate, 
                               dropout_rate=dropout_rate,
                               weight_decay=weight_decay)
