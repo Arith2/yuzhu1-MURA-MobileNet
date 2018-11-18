@@ -1,20 +1,27 @@
 # yuzhu1-MURA-MobileNet
-Keras, MURA, MobileNet, 
+    Keras, 
+    MURA, 
+    MobileNet, 
+https://github.com/JarvisPeng/MURA_densenet.git, [Project](https://github.com/JarvisPeng/MURA_densenet.git)
 
-Topic:Fractures detection on X-Ray images using Machine Learning
+###   1. Topic:
+    Fractures detection on X-Ray images using Machine Learning
 
-Purpose: To implement a machine learning model in Raspberry Pi
+###   2. Purpose:
+    To implement a machine learning model in Raspberry Pi
 
-Configuration:
-Ubuntu 16.04,
-Tensorflow,
-Virtualenv,
-Keras,
-Python 3.5.
-
-11-17-2018
-1）Run a current project based on DNN successfully, https://github.com/JarvisPeng/MURA_densenet.git.
-2) Log file in json format:
+###   3. Configuration:
+    Ubuntu 16.04,
+    Tensorflow,
+    Virtualenv,
+    Keras,
+    Python 3.5.
+    
+###  4. 11-17-2018: <h3>
+   1. Run a current project based on DNN successfully, https://github.com/JarvisPeng/MURA_densenet.git.
+   1. Next step: use MobileNet to replace DNN to reduce the size of network and the consumption of resources
+   1. Log file in json format:
+   ```json
 {
     "batch_size": 8,
     "learning_rate": [
@@ -42,4 +49,4 @@ Python 3.5.
         ]
     ]
 }
-3) Next step: use MobileNet to replace DNN to reduce the size of network and the consumption of resources
+    ```
