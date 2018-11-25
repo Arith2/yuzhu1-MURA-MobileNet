@@ -48,4 +48,8 @@
         ]
     ]
 }
+   ```
+### 5. 11-25-2018
+   1. Use MobileNet to replace DenseNet, reduce time consumption
+   1. Get the result for all 7 classes, record in Json file.
 
