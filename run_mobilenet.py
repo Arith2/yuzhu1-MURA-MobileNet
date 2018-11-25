@@ -1,15 +1,7 @@
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
-import matplotlib.pyplot as plt # showing and rendering figures
-# io related
-from skimage.io import imread
 import os
 import datetime
 import json
-from collections import OrderedDict
-from glob import glob
-# not needed in Kaggle, but required in Jupyter
-# %matplotlib inline
+from collections import OrderedDict                     # want to get the json file in order, not succeed
 
 from keras.applications.mobilenet import MobileNet
 from keras.preprocessing.image import ImageDataGenerator
@@ -17,33 +9,30 @@ from keras.callbacks import ModelCheckpoint, LearningRateScheduler, EarlyStoppin
 
 
 def make_vdirs_for_keras(dir_list, catdir_name):        # divide all data to be positive and negative
-
-    os.makedirs(catdir_name, exist_ok=True)     # create subdirectory
+                                                        # the class for MURA should be two
+                                                        # preprocess data to adjust the format
+    os.makedirs(catdir_name, exist_ok=True)             # create subdirectory
     dir_pos = os.path.join(catdir_name,'positive')
     dir_neg = os.path.join(catdir_name,'negative')
 
-    os.makedirs(dir_pos, exist_ok=True)     # create subdirectory ./v_train/XR_WRIST/positive
-    os.makedirs(dir_neg, exist_ok=True)     # create subdirectory ./v_train_XR_WRIST/negative
-    sym_dirs = []   # return figure and label
+    os.makedirs(dir_pos, exist_ok=True)                 # create subdirectory ./v_train/XR_WRIST/positive
+    os.makedirs(dir_neg, exist_ok=True)                 # create subdirectory ./v_train_XR_WRIST/negative
+    sym_dirs = []                                       # return figure and label
 
     for root, dirs, files in os.walk(dir_list):
         if files:
-            # print('root', root)
-            # print('baseroot', os.path.basename(root))
-            # print(root.split('_')[-1])
-            # print(root.split('/')[9])
             base_root = root.split('/')[9]
             if root.split('_')[-1] == 'positive' :
                 n_dir = os.path.join(dir_pos, base_root)  # create the absolute path
             else:
                 n_dir = os.path.join(dir_neg, base_root)  # create the absolute path
             # print('n_dir', n_dir)
-            if not os.path.isfile(n_dir) :  # judge whether the file exist already
+            if not os.path.isfile(n_dir) :                # judge whether the file exist already
                 try:
                     os.symlink(os.path.abspath(root),
                                n_dir)
-                                            # target_is_directory=True)
-                except FileExistsError:     # raise error
+                                           
+                except FileExistsError:                   # raise error
                     os.remove(n_dir)
                     os.symlink(os.path.abspath(root),
                                n_dir)
@@ -56,16 +45,14 @@ def train_mobilenet(image_class, epochs):
 
     start_train_time = datetime.datetime.now()
     image_class = image_class
-    root_path = '/home/yu/Documents/tensorflow/MURA/MURA-v1.1/'                  # the root path of dataset
-    train_dirs = os.path.join(root_path, 'train/{}'.format(image_class))  # import data for training
-    valid_dirs = os.path.join(root_path, 'valid/{}'.format(image_class))  # import data for validation
+    root_path = '/home/yu/Documents/tensorflow/MURA/MURA-v1.1/'                     # the root path of dataset
+    train_dirs = os.path.join(root_path, 'train/{}'.format(image_class))            # import data for training
+    valid_dirs = os.path.join(root_path, 'valid/{}'.format(image_class))            # import data for validation
 
-    if not os.path.exists('v_train/{}'.format(image_class)):                      # iterate to create symbolic link to data
-        # keras_train_dirs = make_vdirs_for_keras(train_dirs, 'v_train/{}'.format(image_class))
+    if not os.path.exists('v_train/{}'.format(image_class)):                        # iterate to create symbolic link to data
         make_vdirs_for_keras(train_dirs, 'v_train/{}'.format(image_class))
 
-    if not os.path.exists('v_valid/{}'.format(image_class)):
-        # keras_valid_dirs = make_vdirs_for_keras(valid_dirs, 'v_valid/{}'.format(image_class))
+    if not os.path.exists('v_valid/{}'.format(image_class)):        
         make_vdirs_for_keras(valid_dirs, 'v_valid/{}'.format(image_class))
 
     idg_train_settings = dict(
@@ -121,11 +108,11 @@ def train_mobilenet(image_class, epochs):
     early = EarlyStopping(monitor="val_acc",
                           mode="max",
                           patience=3)
-    callbacks_list = [checkpoint, early]    #early
+    callbacks_list = [checkpoint, early]            #early
 
     s_net.fit_generator(
                     train_gen,
-                    steps_per_epoch=30,          # default 30
+                    steps_per_epoch=30,             # default 30
                     validation_data=valid_gen,
                     validation_steps=10,
                     epochs=epochs,
@@ -133,7 +120,6 @@ def train_mobilenet(image_class, epochs):
 
     end_train_time = datetime.datetime.now()
     time_train = end_train_time - start_train_time
-    # print(type(valid_gen))
     return time_train, s_net, valid_gen
 #    print('Total training time: %s' % (end_train_time - start_time))
 
@@ -148,8 +134,7 @@ def log_mobilenet(data, time, loss, acc):
     if not os.path.exists('log'):
         os.mkdir('log')
     mkfile_time = datetime.datetime.strftime(datetime.datetime.now(), '%Y%m%d%H%M%S')+'.json'
-    json_file = os.path.join('./log', mkfile_time)
-    # json_file = './log/1232.json'
+    json_file = os.path.join('./log', mkfile_time)                          # use time to name the log file
     with open(json_file, 'a') as fp:
         for i, image in enumerate(data):
             d_log = {}
