@@ -5,17 +5,17 @@
 ###   1. Topic:
     Fractures detection on X-Ray images using Machine Learning
 
-###   1. Purpose:
+###   2. Purpose:
     To implement a machine learning model in Raspberry Pi
 
-###   1. Configuration:
+###   3. Configuration:
     Ubuntu 16.04,
     Tensorflow,
     Virtualenv,
     Keras,
     Python 3.5.
     
-###  1. 11-17-2018: <h3>
+###   4. 11-17-2018: <h3>
    1. Run a current project based on DNN successfully, https://github.com/JarvisPeng/MURA_densenet.git.
    1. Train_accuracy is 0.59648, valid_accuracy is 0.50753
    1. Next step: use MobileNet to replace DNN to reduce the size of network and the consumption of resources
@@ -49,7 +49,7 @@
     ]
 }
    ```
-### 1. 11-25-2018
+###  5. 11-25-2018
    1. Use MobileNet to replace DenseNet, reduce time consumption
    1. Get the result for all 7 classes, record in Json file, https://github.com/Arith2/yuzhu1-MURA-MobileNet/blob/master/20181125195248.json
 
