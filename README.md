@@ -1,6 +1,7 @@
 # yuzhu1-MURA-MobileNet
    Keras, MURA, MobileNet,</br>
-   Reference: https://github.com/JarvisPeng/MURA_densenet.git.
+   Reference: [1] https://github.com/JarvisPeng/MURA_densenet.git.
+              [2] https://www.kaggle.com/kmader/mura-finger-classification
 
 ###   1. Topic:
     Fractures detection on X-Ray images using Machine Learning
