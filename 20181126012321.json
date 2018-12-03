@@ -1,0 +1,36 @@
+{
+    "Class": "XR_ELBOW",
+    "Loss_evaluate": 0.7820811212062836,
+    "Time for training": "0:14:21.682887",
+    "Accuracy_evaluate": 0.5125
+}{
+    "Class": "XR_FINGER",
+    "Loss_evaluate": 0.5921700209379196,
+    "Time for training": "0:26:08.423902",
+    "Accuracy_evaluate": 0.71875
+}{
+    "Class": "XR_FOREARM",
+    "Loss_evaluate": 0.9334700930399525,
+    "Time for training": "0:09:01.265738",
+    "Accuracy_evaluate": 0.4949494952505285
+}{
+    "Class": "XR_HAND",
+    "Loss_evaluate": 0.7209585428237915,
+    "Time for training": "0:12:31.800010",
+    "Accuracy_evaluate": 0.5125
+}{
+    "Class": "XR_HUMERUS",
+    "Loss_evaluate": 2.227398667365882,
+    "Time for training": "0:19:24.436860",
+    "Accuracy_evaluate": 0.5031847135656199
+}{
+    "Class": "XR_SHOULDER",
+    "Loss_evaluate": 0.6935233831405639,
+    "Time for training": "0:11:00.155071",
+    "Accuracy_evaluate": 0.521875
+}{
+    "Class": "XR_WRIST",
+    "Loss_evaluate": 2.5940910458564757,
+    "Time for training": "0:07:41.529580",
+    "Accuracy_evaluate": 0.44375
+}
