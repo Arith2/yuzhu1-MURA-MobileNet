@@ -15,3 +15,9 @@ Result:
 Reference:
 1. https://github.com/samjabrahams/tensorflow-on-raspberry-pi
 2. https://www.tensorflow.org/install/
+3. https://www.raspberrypi.org/forums/viewtopic.php?t=142581
+4. https://www.raspberrypi.org/forums/viewtopic.php?t=213863
+
+Error:
+1. If you meet some errors about 'h5py', then this command may help: 'sudo apt-get install python3-h5py'
+2. Preinstall some packages may help solve the problem
