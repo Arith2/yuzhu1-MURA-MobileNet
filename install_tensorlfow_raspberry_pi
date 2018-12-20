@@ -1,0 +1,16 @@
+Actually, now it is not difficult to install tensorflow in raspberry pi.
+
+Requirement:
+1. Raspberry Pi
+2. Raspbian 9.3
+
+Procedure:
+1. sudo apt install libatlas-base-dev
+2. pip3 install tensorflow
+
+Result:
+1. we could see that the version of tensorflow may not be the latest, so we need to update
+2. for version of CPU: pip3 install --upgrade tensorflow
+
+Reference:
+https://github.com/samjabrahams/tensorflow-on-raspberry-pi
