@@ -13,4 +13,5 @@ Result:
 2. for version of CPU: pip3 install --upgrade tensorflow
 
 Reference:
-https://github.com/samjabrahams/tensorflow-on-raspberry-pi
+1. https://github.com/samjabrahams/tensorflow-on-raspberry-pi
+2. https://www.tensorflow.org/install/
